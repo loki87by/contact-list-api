@@ -26,6 +26,10 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
   - [Добавить контакт](https://github.com/loki87by/contacts-list-api#contacts)
   - [Редактировать контакт](https://github.com/loki87by/contacts-list-api#contacts)
   - [Удалить контакт](https://github.com/loki87by/contacts-list-api#contacts)
+- **Действия с чужими аккаунтами**
+  - [Добавить в контакты другого пользователя](https://github.com/loki87by/contacts-list-api#friends)
+  - [Редактировать контакт другого пользователя под себя](https://github.com/loki87by/contacts-list-api#friends)
+  - [Удалить контакт другого пользователя](https://github.com/loki87by/contacts-list-api#friends)
 
 ## **Регистрация**
 
@@ -264,6 +268,8 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   `_password=[string]`
 
+  `_avatar=[string]`
+
   `_phones=[aray<string>]`
 
 - **Data Params**
@@ -383,7 +389,7 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
       "id": 4,
       "ownerId": 3,
       "name": "name",
-      "phone": "+435342534",
+      "phones": ["+435342534"],
       "email": "email@email.email",
       "quote": "hello, world"
     }
@@ -430,7 +436,9 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   `_email=[string]`
 
-  `_phone=[string]`
+  `_avatar=[string]`
+
+  `_phones=[array<string>]`
 
   `_quote=['string']`
 
@@ -440,14 +448,14 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
 - **Success Response:**
 
-  - **Code:** 200 OK <br />
+  - **Code:** 200 <br />
     **Content:**
     ```json
     {
       "id": 4,
       "ownerId": 3,
       "name": "name",
-      "phone": "+11111111",
+      "phones": ["+11111111"],
       "email": "email@email.email",
       "quote": "hello, world!"
     }
@@ -497,6 +505,8 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   `_email=[string]`
 
+  `_avatar=[string]`
+
   `_phones=[aray<string>]`
 
   `_quote=['string']`
@@ -507,14 +517,15 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
 - **Success Response:**
 
-  - **Code:** 200 OK <br />
+  - **Code:** 200 <br />
     **Content:**
     ```json
     {
       "id": 4,
       "ownerId": 3,
       "name": "new_name",
-      "phone": "+11111111",
+      "avatar": "https://avatars.githubusercontent.com/u/61252310?v=4",
+      "phones": ["+11111111"],
       "email": "new_email@email.email",
       "quote": "welcome back, world!"
     }
@@ -535,13 +546,194 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
 ## **Удалить контакт**
 
-Удаляет контакт из списка.
+Выдает список контактов.
 
 <details>
 
 - **URL**
 
   /contacts
+
+- **Method:**
+
+  `GET`
+
+- **Headers:**
+
+  `'Authorization': 'Bearer token'`
+  `token` полученный после запроса на [Вход в аккаунт](https://github.com/loki87by/contacts-list-api#login)
+
+- **URL Params**
+
+  None
+
+- **Query Params**
+
+  None
+
+- **Data Params**
+
+  None
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+    ```json
+    {
+      "id": 4,
+      "ownerId": 3,
+      "name": "name",
+      "phones": ["+435342534"],
+      "email": "email@email.email",
+      "quote": "hello, world"
+    }
+    ```
+
+- **Error Response:**
+
+  None
+
+- **Notes:**
+
+  None
+
+</details>
+
+## **Добавить в контакты другого пользователя**
+
+Добавляет данные зарегистрированного пользователя в список контактов.
+
+<details>
+
+- **URL**
+
+  /friends
+
+- **Method:**
+
+  `POST`
+
+- **Headers:**
+
+  `'Content-Type': 'application/json'`
+  `'Authorization': 'Bearer token'`
+  `token` полученный после запроса на [Вход в аккаунт](https://github.com/loki87by/contacts-list-api#login)
+
+- **URL Params**
+
+  None
+
+- **Query Params**
+
+  **Required:**
+
+- **Data Params**
+
+  None
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+    ```json
+    {
+      "name": "name",
+      "email": "email@email.email",
+      "avatar": "https://avatars.githubusercontent.com/u/61252310?v=4",
+      "phones": ["+11111111"],
+    }
+    ```
+
+- **Error Response:**
+
+    - **Code:** 400 <br />
+    **Content:**
+
+    Такой пользователь не зарегистрирован.
+
+- **Notes:**
+
+  None
+
+</details>
+
+## **Редактировать контакт другого пользователя под себя**
+
+Редактирует данные другого пользователя внутри личного контакт-листа.
+
+<details>
+
+- **URL**
+
+  /friends
+
+- **Method:**
+
+  `PATCH`
+
+- **Headers:**
+
+  `'Content-Type': 'application/json'`
+  `'Authorization': 'Bearer token'`
+  `token` полученный после запроса на [Вход в аккаунт](https://github.com/loki87by/contacts-list-api#login)
+
+- **URL Params**
+
+  None
+
+- **Query Params**
+
+  **Required:**
+  `_email=[string]`
+
+  **Optional:**
+  `_avatar=[string]`
+
+  `_phones=[aray<string>]`
+
+  `_quote=['string']`
+
+- **Data Params**
+
+  None
+
+- **Success Response:**
+
+  - **Code:** 200<br />
+    **Content:**
+    ```json
+    {
+      "name": "new_name",
+      "email": "new_email@email.email",
+      "avatar": "https://avatars.githubusercontent.com/u/61252310?v=4",
+      "phones": ["+11111111"],
+      "quote": "welcome back, world!"
+    }
+    ```
+
+- **Error Response:**
+
+  - **Code:** 400 <br />
+    **Content:**
+
+    Такой пользователь не зарегистрирован.
+
+- **Notes:**
+
+  None
+
+</details>
+
+## **Удалить контакт другого пользователя**
+
+Удаляет контакт из контакт-листа.
+
+<details>
+
+- **URL**
+
+  /friends
 
 - **Method:**
 
@@ -559,7 +751,7 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 - **Query Params**
 
   **Required:**
-  `_id=[string|integer]`
+  `_email=[string]`
 
 - **Data Params**
 
@@ -569,14 +761,14 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   - **Code:** 200 <br />
     **Content:**
-    Контакт удалён.
+    Пользователь удален из друзей.
 
 - **Error Response:**
 
   - **Code:** 400 <br />
     **Content:**
 
-    У вас нет прав для совершения данной операции.
+    Такой пользователь не зарегистрирован.
 
 - **Notes:**
 
