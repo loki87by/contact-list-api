@@ -70,30 +70,27 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   - **Code:** 201 <br />
     **Content:**
-    ```json
-    [
-      {
-        "name": "name",
-        "email": "email@email.email",
-        "password": "password",
-        "id": 1
-      }
-    ]
-    ```
+    
+    Регистрация прошла успешно
 
 - **Error Response:**
 
   - **Code:** 409 <br />
     **Content:**
-
-    Пользователь с таким email уже существует.
+    ```json
+    {
+      "message": "Пользователь с таким email уже существует."
+    }
+    ```
 
   ИЛИ
 
   - **Code:** 400 <br />
     **Content:**
-
-    Введены не все или некорректные данные.
+    ```json
+    {
+      "message": "Введены не все или некорректные данные."
+    }
 
 - **Notes:**
 
@@ -148,22 +145,31 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   - **Code:** 404 <br />
     **Content:**
-
-    Такой пользователь не зарегистрирован.
+    ```json
+    {
+      "message": "Такой пользователь не зарегистрирован."
+    }
+    ```
 
   ИЛИ
 
   - **Code:** 401 <br />
     **Content:**
-
-    Неправильные почта или пароль.
+    ```json
+    {
+      "message": "Неправильные почта или пароль."
+    }
+    ```
 
   ИЛИ
 
   - **Code:** 400 <br />
     **Content:**
-
-    Введены не все или некорректные данные.
+    ```json
+    {
+      "message": "Введены не все или некорректные данные."
+    }
+    ```
 
 - **Notes:**
 
@@ -187,8 +193,7 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
 - **Headers:**
 
-  `'Authorization': 'Bearer token'`
-  `token` полученный после запроса на [Вход в аккаунт](https://github.com/loki87by/contacts-list-api#login)
+  None
 
 - **URL Params**
 
@@ -211,17 +216,30 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
       {
         "name": "Колобок",
         "email": "Kolobok@gmail.com",
-        "password": "Kolobok123",
-        "id": 1,
+        "avatar": "https://proza.ru/pics/2014/05/10/1565.jpg",
         "friends": []
-      },
-      {
+    },
+    {
         "name": "Медведь",
         "email": "Bear@gmail.com",
-        "password": "Bear123",
-        "id": 2,
+        "avatar": "https://sportishka.com/uploads/posts/2021-11/1638301090_3-sportishka-com-p-medved-kachok-krasivie-foto-silovie-vidi-s-3.jpg",
         "friends": []
-      }
+    },
+    {
+        "name": "Лисица",
+        "email": "Fox@gmail.com",
+        "avatar": "https://cs14.pikabu.ru/post_img/2022/01/12/10/1642007349154723555.jpg",
+        "friends": []
+    },
+    {
+        "name": "Loki87by",
+        "email": "loki87.666@gmail.com",
+        "avatar": "https://avatars.githubusercontent.com/u/61252310?v=4",
+        "phones": [
+            "+79955935756"
+        ],
+        "friends": []
+    }
     ]
     ```
 
@@ -280,17 +298,7 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   - **Code:** 200 <br />
     **Content:**
-    ```json
-    [
-      {
-        "name": "new_name",
-        "email": "new_email@email.email",
-        "password": "new_password",
-        "phones": ["+123321123", "112"],
-        "id": 1
-      }
-    ]
-    ```
+    Данные успешно обновлены
 
 - **Error Response:**
 
@@ -450,16 +458,7 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   - **Code:** 200 <br />
     **Content:**
-    ```json
-    {
-      "id": 4,
-      "ownerId": 3,
-      "name": "name",
-      "phones": ["+11111111"],
-      "email": "email@email.email",
-      "quote": "hello, world!"
-    }
-    ```
+    Контакт добавлен
 
 - **Error Response:**
 
@@ -519,24 +518,17 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   - **Code:** 200 <br />
     **Content:**
-    ```json
-    {
-      "id": 4,
-      "ownerId": 3,
-      "name": "new_name",
-      "avatar": "https://avatars.githubusercontent.com/u/61252310?v=4",
-      "phones": ["+11111111"],
-      "email": "new_email@email.email",
-      "quote": "welcome back, world!"
-    }
-    ```
+    Данные контакта обновлены успешно
 
 - **Error Response:**
 
   - **Code:** 400 <br />
     **Content:**
-
-    У вас нет прав для совершения данной операции.
+    ```json
+    {
+      "message": "У вас нет прав для совершения данной операции."
+    }
+    ```
 
 - **Notes:**
 
@@ -636,21 +628,17 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   - **Code:** 200 <br />
     **Content:**
-    ```json
-    {
-      "name": "name",
-      "email": "email@email.email",
-      "avatar": "https://avatars.githubusercontent.com/u/61252310?v=4",
-      "phones": ["+11111111"],
-    }
-    ```
+    Пользователь добавлен в список ваших контактов
 
 - **Error Response:**
 
     - **Code:** 400 <br />
     **Content:**
-
-    Такой пользователь не зарегистрирован.
+    ```json
+    {
+      "message": "Такой пользователь не зарегистрирован."
+    }
+    ```
 
 - **Notes:**
 
@@ -702,22 +690,17 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   - **Code:** 200<br />
     **Content:**
-    ```json
-    {
-      "name": "new_name",
-      "email": "new_email@email.email",
-      "avatar": "https://avatars.githubusercontent.com/u/61252310?v=4",
-      "phones": ["+11111111"],
-      "quote": "welcome back, world!"
-    }
-    ```
+    Данные контакта успешно обновлены
 
 - **Error Response:**
 
   - **Code:** 400 <br />
     **Content:**
-
-    Такой пользователь не зарегистрирован.
+    ```json
+    {
+      "message": "Такой пользователь не зарегистрирован."
+    }
+    ```
 
 - **Notes:**
 
@@ -767,8 +750,11 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   - **Code:** 400 <br />
     **Content:**
-
-    Такой пользователь не зарегистрирован.
+    ```json
+    {
+      "message": "Такой пользователь не зарегистрирован."
+    }
+    ```
 
 - **Notes:**
 

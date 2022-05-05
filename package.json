@@ -1,6 +1,6 @@
 {
   "name": "contact-list-api",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Fake api to test app",
   "main": "index.js",
   "scripts": {
@@ -12,6 +12,7 @@
     "json-server": "^0.16.3"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "jsonwebtoken": "^8.5.1"
   }
 }
