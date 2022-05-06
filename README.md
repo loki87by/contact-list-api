@@ -15,24 +15,24 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 ## Запросы
 
 - **Авторизация**
-  - [Регистрация](https://github.com/loki87by/contacts-list-api#registration)
-  - [Вход в аккаунт](https://github.com/loki87by/contacts-list-api#login)
+  - [Регистрация](https://github.com/loki87by/contact-list-api#registration)
+  - [Вход в аккаунт](https://github.com/loki87by/contact-list-api#login)
 - **Действия с аккаунтом**
-  - [Получить список зарегистрированных пользователей](https://github.com/loki87by/contacts-list-api#get-users)
-  - [Обновить данные пользователя](https://github.com/loki87by/contacts-list-api#update-users)
-  - [Удалить аккаунт](https://github.com/loki87by/contacts-list-api#delete-user)
+  - [Получить список зарегистрированных пользователей](https://github.com/loki87by/contact-list-api#get-users)
+  - [Обновить данные пользователя](https://github.com/loki87by/contact-list-api#update-users)
+  - [Удалить аккаунт](https://github.com/loki87by/contact-list-api#delete-user)
 - **Действия с контактами**
-  - [Получить контакты пользователя](https://github.com/loki87by/contacts-list-api#get-contacts)
-  - [Добавить контакт](https://github.com/loki87by/contacts-list-api#add-contacts)
-  - [Редактировать контакт](https://github.com/loki87by/contacts-list-api#update-contacts)
-  - [Удалить контакт](https://github.com/loki87by/contacts-list-api#delete-contact)
+  - [Получить контакты пользователя](https://github.com/loki87by/contact-list-api#get-contacts)
+  - [Добавить контакт](https://github.com/loki87by/contact-list-api#add-contacts)
+  - [Редактировать контакт](https://github.com/loki87by/contact-list-api#update-contacts)
+  - [Удалить контакт](https://github.com/loki87by/contact-list-api#delete-contact)
 - **Действия с чужими аккаунтами**
-  - [Добавить в контакты другого пользователя](https://github.com/loki87by/contacts-list-api#add-friend)
-  - [Редактировать контакт другого пользователя под себя](https://github.com/loki87by/contacts-list-api#update-friend)
-  - [Удалить контакт другого пользователя](https://github.com/loki87by/contacts-list-api#delete-friend)
-  - [Получить собственные данные](https://github.com/loki87by/contacts-list-api#me)
+  - [Добавить в контакты другого пользователя](https://github.com/loki87by/contact-list-api#add-friend)
+  - [Редактировать контакт другого пользователя под себя](https://github.com/loki87by/contact-list-api#update-friend)
+  - [Удалить контакт другого пользователя](https://github.com/loki87by/contact-list-api#delete-friend)
+  - [Получить собственные данные](https://github.com/loki87by/contact-list-api#me)
 
-## **registration**
+## **Registration**
 
 Регистрирует нового пользователя.
 
@@ -102,7 +102,7 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
 </details>
 
-## **login**
+## **Login**
 
 Возвращает json web token.
 
@@ -181,7 +181,7 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
 </details>
 
-## **get-users**
+## **Get users**
 
 Возвращает массив пользователей.
 
@@ -257,7 +257,7 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
 </details>
 
-## **update-users**
+## **Update users**
 
 Редактирует данные аккаунта.
 
@@ -318,7 +318,7 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
 </details>
 
-## **delete-user**
+## **Delete user**
 
 Удаляет аккаунт
 
@@ -369,7 +369,7 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
 </details>
 
-## **get-contacts**
+## **Get contacts**
 
 Выдает список контактов.
 
@@ -425,7 +425,7 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
 </details>
 
-## **add-contacts**
+## **Add contacts**
 
 Добавляет новый контакт.
 
@@ -486,7 +486,7 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
 </details>
 
-## **update-contacts**
+## **Update contacts**
 
 Заменяет данные контакта.
 
@@ -556,7 +556,7 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
 </details>
 
-## **delete-contact**
+## **Delete contact**
 
 Выдает список контактов.
 
@@ -612,7 +612,7 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
 </details>
 
-## **add-friend**
+## **Add friend**
 
 Добавляет данные зарегистрированного пользователя в список контактов.
 
