@@ -1,6 +1,6 @@
 {
   "name": "contact-list-api",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Fake api to test app",
   "main": "index.js",
   "scripts": {

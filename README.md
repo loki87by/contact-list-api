@@ -30,6 +30,7 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
   - [Добавить в контакты другого пользователя](https://github.com/loki87by/contacts-list-api#friends)
   - [Редактировать контакт другого пользователя под себя](https://github.com/loki87by/contacts-list-api#friends)
   - [Удалить контакт другого пользователя](https://github.com/loki87by/contacts-list-api#friends)
+  - [Получить собственные данные](https://github.com/loki87by/contacts-list-api#me)
 
 ## **Регистрация**
 
@@ -70,8 +71,11 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   - **Code:** 201 <br />
     **Content:**
-    
-    Регистрация прошла успешно
+    ```json
+    {
+      "message": "Регистрация прошла успешно."
+    }
+    ```
 
 - **Error Response:**
 
@@ -298,7 +302,11 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   - **Code:** 200 <br />
     **Content:**
-    Данные успешно обновлены
+    ```json
+    {
+      "message": "Данные успешно обновлены."
+    }
+    ```
 
 - **Error Response:**
 
@@ -345,7 +353,11 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   - **Code:** 200 OK <br />
     **Content:**
-    Ваш аккаунт удалён.
+    ```json
+    {
+      "message": "Ваш аккаунт удалён."
+    }
+    ```
 
 - **Error Response:**
 
@@ -458,7 +470,11 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   - **Code:** 200 <br />
     **Content:**
-    Контакт добавлен
+    ```json
+    {
+      "message": "Контакт добавлен."
+    }
+    ```
 
 - **Error Response:**
 
@@ -518,7 +534,11 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   - **Code:** 200 <br />
     **Content:**
-    Данные контакта обновлены успешно
+    ```json
+    {
+      "message": "Данные контакта обновлены успешно."
+    }
+    ```
 
 - **Error Response:**
 
@@ -628,7 +648,11 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   - **Code:** 200 <br />
     **Content:**
-    Пользователь добавлен в список ваших контактов
+    ```json
+    {
+      "message": "Пользователь добавлен в список ваших контактов."
+    }
+    ```
 
 - **Error Response:**
 
@@ -690,7 +714,11 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   - **Code:** 200<br />
     **Content:**
-    Данные контакта успешно обновлены
+    ```json
+    {
+      "message": "Данные контакта успешно обновлены."
+    }
+    ```
 
 - **Error Response:**
 
@@ -744,7 +772,11 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   - **Code:** 200 <br />
     **Content:**
-    Пользователь удален из друзей.
+    ```json
+    {
+      "message": "Пользователь удален из друзей."
+    }
+    ```
 
 - **Error Response:**
 
@@ -755,6 +787,60 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
       "message": "Такой пользователь не зарегистрирован."
     }
     ```
+
+- **Notes:**
+
+  None
+
+</details>
+
+## **Получить собственные данные**
+
+Возвращает данные конкретного пользователя.
+
+<details>
+
+- **URL**
+
+  /me
+
+- **Method:**
+
+  `GET`
+
+- **Headers:**
+
+  `'Authorization': 'Bearer token'`
+  `token` полученный после запроса на [Вход в аккаунт](https://github.com/loki87by/contacts-list-api#login)
+
+- **URL Params**
+
+  None
+
+- **Query Params**
+
+  None
+
+- **Data Params**
+
+  None
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+    ```json
+      {
+        "name": "Колобок",
+        "email": "Kolobok@gmail.com",
+        "avatar": "https://proza.ru/pics/2014/05/10/1565.jpg",
+        "friends": []
+    },
+    ```
+
+- **Error Response:**
+
+  None
 
 - **Notes:**
 

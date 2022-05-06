@@ -172,23 +172,23 @@ server.patch("/users", (req, res) => {
   const userData = db.users.find((user) => user.id === payload.id);
 
   if (name) {
-    userData.name = name;
+    userData.name = decodeURI(name);
   }
 
   if (email) {
-    userData.email = email;
+    userData.email = decodeURI(email);
   }
 
   if (avatar) {
-    userData.avatar = avatar;
+    userData.avatar = decodeURI(avatar);
   }
 
   if (phones) {
-    userData.phones = phones;
+    userData.phones = decodeURI(phones);
   }
 
   if (password) {
-    bcrypt.hash(password, 10).then((hash) => {
+    bcrypt.hash(decodeURI(password), 10).then((hash) => {
       userData.password = hash;
     });
   }
@@ -212,8 +212,8 @@ server.get("/contacts", (req, res) => {
     (contact) => contact.ownerId === user.id
   );
   const visibleContactListData = contactList.map((item) => {
-    const { name, email, avatar, phones, quote } = item;
-    return { name, email, avatar, phones, quote }
+    const { name, email, avatar, phones, quote, id } = item;
+    return { name, email, avatar, phones, quote, id }
   })
   res.status(200).send(visibleContactListData);
 });
@@ -227,12 +227,12 @@ server.post("/contacts", (req, res) => {
   const idCounter = Math.max(...ids) + 1;
   const newContact = {
     ownerId: user.id,
-    name: name,
-    email: email,
-    avatar: avatar,
-    phones: phones,
+    name: decodeURI(name),
+    email: decodeURI(email),
+    avatar: decodeURI(avatar),
+    phones: decodeURI(phones),
     id: idCounter,
-    quote: quote,
+    quote: decodeURI(quote),
   };
   db.contacts.push(newContact);
   res.status(201).send({ message: "Контакт добавлен" });
@@ -252,23 +252,23 @@ server.patch("/contacts", (req, res) => {
 
   if (userData.ownerId === user.id) {
     if (name) {
-      userData.name = name;
+      userData.name = decodeURI(name);
     }
 
     if (email) {
-      userData.email = email;
+      userData.email = decodeURI(email);
     }
 
     if (avatar) {
-      userData.avatar = avatar;
+      userData.avatar = decodeURI(avatar);
     }
 
     if (phones) {
-      userData.phones = phones;
+      userData.phones = decodeURI(phones);
     }
 
     if (quote) {
-      userData.quote = quote;
+      userData.quote = decodeURI(quote);
     }
     res.status(200).send({ message: "Данные контакта обновлены успешно" });
   } else {
@@ -307,7 +307,7 @@ server.post("/friends", (req, res) => {
   const token = authorization.replace("Bearer ", "");
   const payload = jwt.verify(token, JWT_SECRET);
   const userData = db.users.find((user) => user.id === payload.id);
-  const currentFriend = db.users.find((user) => user.email === email);
+  const currentFriend = db.users.find((user) => user.email === decodeURI(email));
 
   if (!currentFriend) {
     res.status(400).send({ message: "Такой пользователь не зарегистрирован" });
@@ -336,15 +336,15 @@ server.patch("/friends", (req, res) => {
   }
 
   if (avatar) {
-    currentFriend.avatar = avatar;
+    currentFriend.avatar = decodeURI(avatar);
   }
 
   if (phones) {
-    currentFriend.phones = phones;
+    currentFriend.phones = decodeURI(phones);
   }
 
   if (quote) {
-    currentFriend.quote = quote;
+    currentFriend.quote = decodeURI(quote);
   }
   res.status(200).send({ message: "Данные контакта успешно обновлены" });
 });
