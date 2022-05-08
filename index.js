@@ -70,7 +70,7 @@ const db = {
       email: "rabbit@gmail.com",
       avatar:
         "https://cs5.pikabu.ru/images/big_size_comm/2014-10_3/14133542518215.jpg",
-      phones: "",
+      phones: [],
       quote: "Иногда приносит еду, чтоб защитил от волка с лисой",
     },
     {
@@ -79,7 +79,7 @@ const db = {
       name: "Волк",
       email: "wolf@gmail.com",
       avatar: "https://pxlprint.ru/wp-content/uploads/2014/09/stark.png",
-      phones: "",
+      phones: [],
       quote: "Серый глупец",
     },
   ],
@@ -184,15 +184,29 @@ server.patch("/users", (req, res) => {
   }
 
   if (phones) {
-    userData.phones = decodeURI(phones);
+    const stringifyArray = phones.split("~");
+    const phonesArray = stringifyArray.map((phone) => decodeURI(phone));
+    userData.phones = phonesArray;
+  }
+
+  if (!password) {
+    res.status(200).send({ message: "Данные успешно обновлены" });
   }
 
   if (password) {
-    bcrypt.hash(decodeURI(password), 10).then((hash) => {
-      userData.password = hash;
+    const stringifyArray = password.split("~");
+    const passArray = stringifyArray.map((pass) => decodeURI(pass));
+    bcrypt.compare(passArray[0], userData.password).then((truePass) => {
+      if (truePass) {
+        bcrypt.hash(decodeURI(passArray[1]), 10).then((hash) => {
+          userData.password = hash;
+        });
+        res.status(200).send({ message: "Данные успешно обновлены" });
+      } else {
+        res.send({ message: "Что-то пошло не так, проверьте введенные данные" });
+      }
     });
   }
-  res.status(200).send({ message: "Данные успешно обновлены" });
 });
 
 server.delete("/users", (req, res) => {
@@ -213,8 +227,8 @@ server.get("/contacts", (req, res) => {
   );
   const visibleContactListData = contactList.map((item) => {
     const { name, email, avatar, phones, quote, id } = item;
-    return { name, email, avatar, phones, quote, id }
-  })
+    return { name, email, avatar, phones, quote, id };
+  });
   res.status(200).send(visibleContactListData);
 });
 
@@ -307,7 +321,9 @@ server.post("/friends", (req, res) => {
   const token = authorization.replace("Bearer ", "");
   const payload = jwt.verify(token, JWT_SECRET);
   const userData = db.users.find((user) => user.id === payload.id);
-  const currentFriend = db.users.find((user) => user.email === decodeURI(email));
+  const currentFriend = db.users.find(
+    (user) => user.email === decodeURI(email)
+  );
 
   if (!currentFriend) {
     res.status(400).send({ message: "Такой пользователь не зарегистрирован" });

@@ -288,7 +288,7 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   `_email=[string]`
 
-  `_password=[string]`
+  `_password=[array<oldPassword: string, newPassword: string>]`
 
   `_avatar=[string]`
 
