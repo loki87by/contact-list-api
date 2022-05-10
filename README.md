@@ -462,6 +462,8 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
   `_quote=['string']`
 
+  `_id=['string']`
+
 - **Data Params**
 
   None
@@ -542,7 +544,6 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
 - **Error Response:**
 
-  - **Code:** 400 <br />
     **Content:**
     ```json
     {

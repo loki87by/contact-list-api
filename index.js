@@ -44,7 +44,7 @@ const db = {
   ],
   contacts: [
     {
-      id: 1,
+      id: '1',
       ownerId: 1,
       name: "Бабушка",
       email: "grandMa@mail.ru",
@@ -54,7 +54,7 @@ const db = {
       quote: "Трубку не брать, будет плакаться, что ушел.",
     },
     {
-      id: 2,
+      id: '2',
       ownerId: 1,
       name: "Дедушка",
       email: "grandFa@mail.ru",
@@ -64,7 +64,7 @@ const db = {
       quote: "Трубку не брать, будет проклинать, что ушел.",
     },
     {
-      id: 3,
+      id: '3',
       ownerId: 2,
       name: "Заяц",
       email: "rabbit@gmail.com",
@@ -74,7 +74,7 @@ const db = {
       quote: "Иногда приносит еду, чтоб защитил от волка с лисой",
     },
     {
-      id: 4,
+      id: '4',
       ownerId: 3,
       name: "Волк",
       email: "wolf@gmail.com",
@@ -233,21 +233,44 @@ server.get("/contacts", (req, res) => {
 });
 
 server.post("/contacts", (req, res) => {
-  const { name, email, avatar, phones, quote } = req.query;
+  const { name, email, avatar, phones, quote, id } = req.query;
   const { authorization } = req.headers;
   const token = authorization.replace("Bearer ", "");
   const user = jwt.verify(token, JWT_SECRET);
-  const ids = db.contacts.map((i) => i.id);
+  const ids = db.contacts.map((i) => +i.id);
   const idCounter = Math.max(...ids) + 1;
+  let phoneNumbers;
+
   const newContact = {
+    id: decodeURI(id) || idCounter.toString(),
     ownerId: user.id,
-    name: decodeURI(name),
-    email: decodeURI(email),
-    avatar: decodeURI(avatar),
-    phones: decodeURI(phones),
-    id: idCounter,
-    quote: decodeURI(quote),
-  };
+  }
+
+  if (phones) {
+    const stringifyArray = phones.split("~");
+    const phonesArray = stringifyArray.map((phone) => decodeURI(phone));
+    const clearedArray = phonesArray.filter((phone) => phone !== '')
+    phoneNumbers = clearedArray;
+  }
+
+  if (name) {
+    newContact.name = decodeURI(name);
+  }
+
+  if (email) {
+    newContact.email = decodeURI(email);
+  }
+
+  if (avatar) {
+    newContact.avatar = decodeURI(avatar);
+  }
+
+  if (quote) {
+    newContact.quote = decodeURI(quote);
+  }
+
+  newContact.phones = phoneNumbers
+
   db.contacts.push(newContact);
   res.status(201).send({ message: "Контакт добавлен" });
 });
@@ -257,12 +280,11 @@ server.patch("/contacts", (req, res) => {
   const { authorization } = req.headers;
   const token = authorization.replace("Bearer ", "");
   const user = jwt.verify(token, JWT_SECRET);
+
   if (!id) {
-    res
-      .status(400)
-      .send({ message: "У вас нет прав для совершения данной операции" });
+    res.send({ message: "У вас нет прав для совершения данной операции" });
   }
-  const userData = db.contacts.find((contact) => contact.id === +id);
+  const userData = db.contacts.find((contact) => contact.id === id);
 
   if (userData.ownerId === user.id) {
     if (name) {
@@ -278,7 +300,9 @@ server.patch("/contacts", (req, res) => {
     }
 
     if (phones) {
-      userData.phones = decodeURI(phones);
+      const stringifyArray = phones.split("~");
+      const phonesArray = stringifyArray.map((phone) => decodeURI(phone));
+      userData.phones = phonesArray;
     }
 
     if (quote) {
@@ -286,9 +310,7 @@ server.patch("/contacts", (req, res) => {
     }
     res.status(200).send({ message: "Данные контакта обновлены успешно" });
   } else {
-    res
-      .status(400)
-      .send({ message: "У вас нет прав для совершения данной операции" });
+    res.send({ message: "У вас нет прав для совершения данной операции" });
   }
 });
 
@@ -297,7 +319,7 @@ server.delete("/contacts", (req, res) => {
   const { authorization } = req.headers;
   const token = authorization.replace("Bearer ", "");
   const user = jwt.verify(token, JWT_SECRET);
-  const currentContact = db.contacts.find((contact) => contact.id === +id);
+  const currentContact = db.contacts.find((contact) => contact.id === id);
 
   if (!id) {
     res
