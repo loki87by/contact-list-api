@@ -286,6 +286,10 @@ server.patch("/contacts", (req, res) => {
   }
   const userData = db.contacts.find((contact) => contact.id === id);
 
+  if (!userData) {
+    res.send({ message: "Запрос не корректен, данный контакт отсутствует" });
+  }
+
   if (userData.ownerId === user.id) {
     if (name) {
       userData.name = decodeURI(name);
@@ -327,7 +331,7 @@ server.delete("/contacts", (req, res) => {
       .send({ message: "У вас нет прав для совершения данной операции" });
   }
   if (currentContact.ownerId === user.id) {
-    const contacts = db.contacts.filter((contact) => contact.id !== +id);
+    const contacts = db.contacts.filter((contact) => contact.id !== id);
     db.contacts = contacts;
     res.status(200).send({ message: "Контакт удалён" });
   } else {

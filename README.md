@@ -551,6 +551,14 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
     }
     ```
 
+    ИЛИ
+    
+    ```json
+    {
+      "message": "Запрос не корректен, данный контакт отсутствует."
+    }
+    ```
+
 - **Notes:**
 
   None
