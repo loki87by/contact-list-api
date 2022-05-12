@@ -8,15 +8,15 @@ const db = {
   users: [
     {
       name: "Колобок",
-      email: "Kolobok@gmail.com",
-      password: "$2b$10$bigRvgJtRyN6yKx3yiASGuR3/o.OECylsNV0eVjmE3.SbnCLkz2pK",
+      email: "kolobok@gmail.com",
+      password: "$2b$10$r3cWgdqgz5mlYnvNXzLs2uMQKAv8mzpmcaq0uxJXIBXTtna3qpCKO",
       avatar: "https://proza.ru/pics/2014/05/10/1565.jpg",
       id: 1,
       friends: [],
     },
     {
       name: "Медведь",
-      email: "Bear@gmail.com",
+      email: "bear@gmail.com",
       password: "$2b$10$CR3ivFjGHdJ3KrrHnWPfAuP8wKshg2.MJMdHIlAiQ.WuxtEx5tAP.",
       avatar:
         "https://sportishka.com/uploads/posts/2021-11/1638301090_3-sportishka-com-p-medved-kachok-krasivie-foto-silovie-vidi-s-3.jpg",
@@ -25,7 +25,7 @@ const db = {
     },
     {
       name: "Лисица",
-      email: "Fox@gmail.com",
+      email: "fox@gmail.com",
       password: "$2b$10$SS00ad.FnTQGt6dqE5lrpON0K2/R5IKl8DO7KuwBqsvoBv4J4dmDS",
       avatar:
         "https://cs14.pikabu.ru/post_img/2022/01/12/10/1642007349154723555.jpg",
@@ -51,7 +51,7 @@ const db = {
       avatar:
         "http://s11.pikabu.ru/post_img/big/2020/09/23/7/16008554511492692.jpg",
       phones: ["+79214567890"],
-      quote: "Трубку не брать, будет плакаться, что ушел.",
+      quote: "Трубку не брать, будет плакаться.",
     },
     {
       id: '2',
@@ -61,7 +61,7 @@ const db = {
       avatar:
         "https://cdnb.artstation.com/p/assets/images/images/032/967/687/large/eduard-nabiullin-1.jpg?1608016734",
       phones: ["+79954567890"],
-      quote: "Трубку не брать, будет проклинать, что ушел.",
+      quote: "Трубку не брать, обматерит.",
     },
     {
       id: '3',
@@ -71,7 +71,7 @@ const db = {
       avatar:
         "https://cs5.pikabu.ru/images/big_size_comm/2014-10_3/14133542518215.jpg",
       phones: [],
-      quote: "Иногда приносит еду, чтоб защитил от волка с лисой",
+      quote: "Вечно просит защитить",
     },
     {
       id: '4',
@@ -106,7 +106,7 @@ server.post("/registration", (req, res) => {
       const idCounter = Math.max(...ids) + 1;
       const newUser = {
         name: name,
-        email: email,
+        email: email.toLowerCase(),
         password: hash,
         id: idCounter,
         contacts: [],
@@ -140,7 +140,7 @@ server.post("/login", (req, res) => {
   const { email, password } = req.query;
 
   if ((email, password)) {
-    const currentUser = db.users.find((user) => user.email === email);
+    const currentUser = db.users.find((user) => user.email === email.toLowerCase());
 
     if (!currentUser) {
       return res
@@ -200,6 +200,7 @@ server.patch("/users", (req, res) => {
       if (truePass) {
         bcrypt.hash(decodeURI(passArray[1]), 10).then((hash) => {
           userData.password = hash;
+          console.log(hash)
         });
         res.status(200).send({ message: "Данные успешно обновлены" });
       } else {
@@ -354,41 +355,12 @@ server.post("/friends", (req, res) => {
   if (!currentFriend) {
     res.status(400).send({ message: "Такой пользователь не зарегистрирован" });
   }
-  const friendData = {
-    name: currentFriend.name,
-    email: currentFriend.email,
-    avatar: currentFriend.avatar,
-    phones: currentFriend.phones,
-  };
-  userData.friends.push(friendData);
-  res
-    .status(200)
-    .send({ message: "Пользователь добавлен в список ваших контактов" });
-});
-
-server.patch("/friends", (req, res) => {
-  const { email, avatar, phones, quote } = req.query;
-  const { authorization } = req.headers;
-  const token = authorization.replace("Bearer ", "");
-  const payload = jwt.verify(token, JWT_SECRET);
-  const userData = db.users.find((user) => user.id === payload.id);
-  const currentFriend = userData.friends.find((user) => user.email === email);
-  if (!currentFriend) {
-    res.status(400).send({ message: "Такой пользователь не зарегистрирован" });
+  if(!userData.friends.find((friend) => friend === currentFriend.email)){
+    userData.friends.push(currentFriend.email);
+    res
+      .status(200)
+      .send({ message: "Пользователь добавлен в список ваших контактов" });
   }
-
-  if (avatar) {
-    currentFriend.avatar = decodeURI(avatar);
-  }
-
-  if (phones) {
-    currentFriend.phones = decodeURI(phones);
-  }
-
-  if (quote) {
-    currentFriend.quote = decodeURI(quote);
-  }
-  res.status(200).send({ message: "Данные контакта успешно обновлены" });
 });
 
 server.delete("/friends", (req, res) => {
@@ -401,7 +373,7 @@ server.delete("/friends", (req, res) => {
   if (!currentFriend) {
     res.status(400).send({ message: "Такой пользователь не зарегистрирован" });
   }
-  const newFriendList = userData.friends.filter((user) => user.email !== email);
+  const newFriendList = userData.friends.filter((user) => user !== email);
   userData.friends = newFriendList;
   res.status(200).send({ message: "Пользователь удален из друзей" });
 });
@@ -412,7 +384,13 @@ server.get("/me", (req, res) => {
   const payload = jwt.verify(token, JWT_SECRET);
   const userData = db.users.find((user) => user.id === payload.id);
   const { name, email, avatar, phones, friends } = userData;
-  res.status(200).send({ name, email, avatar, phones, friends });
+  const friendsData = friends.map((id) => {
+    const current = db.users.find((user) => user.email === id);
+    const { name, email, avatar, phones } = current
+    const data = { name, email, avatar, phones }
+    return data
+  })
+  res.status(200).send({ name, email, avatar, phones, friends: friendsData });
 });
 
 server.use(router);
