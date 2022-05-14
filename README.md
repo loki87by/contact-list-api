@@ -722,7 +722,6 @@ Api для [Contacts List](https://github.com/loki87by/contacts-list).
 
 - **Error Response:**
 
-  - **Code:** 400 <br />
     **Content:**
     ```json
     {

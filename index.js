@@ -371,7 +371,7 @@ server.delete("/friends", (req, res) => {
   const userData = db.users.find((user) => user.id === payload.id);
   const currentFriend = userData.friends.find((user) => user.email === email);
   if (!currentFriend) {
-    res.status(400).send({ message: "Такой пользователь не зарегистрирован" });
+    res.send({ message: "Такой пользователь не зарегистрирован" });
   }
   const newFriendList = userData.friends.filter((user) => user !== email);
   userData.friends = newFriendList;
