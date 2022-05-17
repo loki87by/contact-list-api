@@ -384,12 +384,15 @@ server.get("/me", (req, res) => {
   const payload = jwt.verify(token, JWT_SECRET);
   const userData = db.users.find((user) => user.id === payload.id);
   const { name, email, avatar, phones, friends } = userData;
-  const friendsData = friends.map((id) => {
+  let friendsData = []
+  if (friends) {
+  friendsData = friends.map((id) => {
     const current = db.users.find((user) => user.email === id);
     const { name, email, avatar, phones } = current
     const data = { name, email, avatar, phones }
     return data
   })
+}
   res.status(200).send({ name, email, avatar, phones, friends: friendsData });
 });
 

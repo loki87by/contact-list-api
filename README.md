@@ -1,16 +1,16 @@
 # async-race-api
 
-Api для [Contacts List](https://github.com/loki87by/contacts-list).
+Api для [Contacts List](https://github.com/loki87by/contact-list).
 
 ## Установка и запуск
 
 - Используйте `node 12.x` или выше.
 - Откройте командную строку (`PowerShell`, `Git Bash`, и.т.п.)
-- Клонируйте данный репозиторий: `$ git clone https://github.com/loki87by/contacts-list-api.git`.
-- Перейдите в загруженную папку: `$ cd contacts-list-api`.
+- Клонируйте данный репозиторий: `$ git clone https://github.com/loki87by/contact-list-api.git`.
+- Перейдите в загруженную папку: `$ cd contact-list-api`.
 - Установите зависимости: `$ npm install`.
 - Запуск сервера: `$ npm start` или `$ node index.js`.
-- Можете отправлять запросы в ручном режиме на адрес: `http://localhost:3000`, или пользоваться приложением [Contacts List](https://github.com/loki87by/contacts-list).
+- Можете отправлять запросы в ручном режиме на адрес: `http://localhost:3000`, или пользоваться приложением [Contacts List](https://github.com/loki87by/contact-list).
 
 ## Запросы
 
